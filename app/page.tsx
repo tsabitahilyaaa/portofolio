@@ -66,10 +66,10 @@ export default function Portfolio() {
       title: "SELIN - Online Exam System",
       description:
         "A comprehensive online examination platform with real-time monitoring, automated grading, and detailed analytics for educational institutions.",
-      type: "UI/UX Design & Frontend Development",
-      image: "/bookstown.jpg", // contoh gambar, simpan di public/selin.jpg
-      tags: ["React", "Node.js", "MongoDB", "Socket.io", "Figma"],
-      link: "https://www.figma.com/design/0Jd7QQOBU7W8hSSSYwznfX/Untitled?node-id=0-1&p=f&t=TSDLcgvrY7CTD2kG-0", // ganti dengan link Figma atau detail project
+      type: "Graphic Design",
+      image: "/selin.png", // contoh gambar, simpan di public/selin.jpg
+      tags: ["Figma"],
+      link: "https://www.figma.com/design/0Jd7QQOBU7W8hSSSYwznfX/Untitled?node-id=0-1&p=f&t=IKfcMeOHUdUI9Jjp-0", // ganti dengan link Figma atau detail project
     },
     {
       title: "Bookstown App",
@@ -77,26 +77,26 @@ export default function Portfolio() {
         "A modern book discovery and reading tracking application with social features, personalized recommendations, and reading progress tracking.",
       type: "Mobile UI/UX Design",
       image: "/bookstown.jpg",
-      tags: ["React Native", "Firebase", "Figma", "Prototyping"],
+      tags: ["Figma"],
       link: "https://www.figma.com/proto/jSxqhm7VsGQWisEW9Q5KWB/SuperShy_BooksTown?node-id=25-3&p=f&t=rt4mLa4rPCoZnWrN-0&scaling=scale-down&content-scaling=fixed&page-id=25%3A2&starting-point-node-id=25%3A3",
     },
     {
-      title: "E-Commerce Dashboard",
+      title: "Online Exam Management Application",
       description:
-        "An intuitive admin dashboard for e-commerce management with sales analytics, inventory tracking, and customer insights.",
+        "An online exam management application is a digital platform designed to create exam schedules, monitor ongoing tests, and generate participants' score summaries efficiently and securely.",
       type: "Frontend Development",
-      image: "/placeholder.svg?height=300&width=400",
+      image: "/ujian.png",
       tags: ["Next.js", "TypeScript", "Chart.js", "Tailwind CSS"],
-      link: "#",
+      link: "https://github.com/tsabitahilyaaa/aplikasi-ujian-online",
     },
     {
       title: "Personal Portfolio Website",
       description:
         "A personal branding website that showcases Tsabitah's design and development skills through an engaging, elegant portfolio layout.",
       type: "UI/UX Designer & Frontend Developer",
-      image: "/placeholder.svg?height=300&width=400",
-      tags: ["Figma", "HTML", "CSS", "AI Web Builder"],
-      link: "#",
+      image: "/porto.png",
+      tags: ["Figma", "HTML", "CSS"],
+      link: "https://github.com/tsabitahilyaaa/portofolio",
     },
   ]
 
@@ -104,31 +104,16 @@ export default function Portfolio() {
     hard: [
       "UI/UX Design",
       "Frontend Development",
-      "React.js",
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
       "Figma",
-      "Adobe Creative Suite",
-      "Prototyping",
-      "User Research",
-      "Responsive Design",
       "JavaScript",
       "HTML/CSS",
-      "Git",
-      "MongoDB",
     ],
     soft: [
-      "Creative Problem Solving",
       "Team Collaboration",
       "Communication",
       "Time Management",
       "Attention to Detail",
       "Adaptability",
-      "Critical Thinking",
-      "Project Management",
-      "Client Relations",
-      "Mentoring",
     ],
   }
 
@@ -148,32 +133,25 @@ export default function Portfolio() {
       file: "/oracle2.pdf",
     },
     {
-      title: "Learning React.js",
-      issuer: "LinkedIn Learning",
-      date: "2023",
-      preview: "/placeholder.svg?height=300&width=400",
-      file: "#",
+      title: "Career Essentials in Generative AI",
+      issuer: "Microsoft and LinkedIn",
+      date: "2024",
+      preview: "/ai.png",
+      file: "/ai.pdf",
     },
     {
-      title: "Advanced CSS and Sass",
-      issuer: "LinkedIn Learning",
-      date: "2023",
-      preview: "/placeholder.svg?height=300&width=400",
-      file: "#",
+      title: "CCNA: Switching, Routing, and Wireless Essentials",
+      issuer: "Cisco Networking Academy",
+      date: "2025",
+      preview: "/cisco.png",
+      file: "/cisco.pdf",
     },
     {
-      title: "Introduction to Cybersecurity",
-      issuer: "NetAcad Cisco",
-      date: "2023",
-      preview: "/placeholder.svg?height=300&width=400",
-      file: "#",
-    },
-    {
-      title: "UI/UX Design Competition Winner",
-      issuer: "National Design Competition",
-      date: "2023",
-      preview: "/placeholder.svg?height=300&width=400",
-      file: "#",
+      title: "Bronze Award",
+      issuer: "Indonesia National Science Enterprise Challenge",
+      date: "2020",
+      preview: "/inasec.png",
+      file: "/inasec.pdf",
     },
   ]
 
@@ -184,7 +162,7 @@ export default function Portfolio() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-              Tsabitah
+              Tsabitah Hilyatul Aulia
             </div>
             <div className="hidden md:flex space-x-8">
               {["home", "about", "projects", "skills", "certificates", "contact"].map((section) => (
@@ -233,10 +211,6 @@ export default function Portfolio() {
             <Badge variant="secondary" className="bg-pink-100 text-pink-700 px-4 py-2 text-lg">
               <Palette className="w-4 h-4 mr-2" />
               UI/UX Designer
-            </Badge>
-            <Badge variant="secondary" className="bg-purple-100 text-purple-700 px-4 py-2 text-lg">
-              <Code className="w-4 h-4 mr-2" />
-              Frontend Developer
             </Badge>
           </div>
 
@@ -304,7 +278,7 @@ export default function Portfolio() {
                   development, I bridge the gap between creativity and functionality.
                 </p>
                 <p className="text-gray-600 leading-relaxed mb-6">
-                  My journey began with a fascination for how digital products can impact people's lives. I love
+                  I'm an Informatics Engineering Student at Politeknik Negeri Semarang. My journey began with a fascination for how digital products can impact people's lives. I love
                   creating intuitive interfaces that make complex tasks feel effortless and enjoyable. When I'm not
                   designing or coding, you'll find me exploring new design trends, learning emerging technologies, or
                   sketching ideas in my notebook.
@@ -787,7 +761,7 @@ export default function Portfolio() {
         <div className="container mx-auto text-center">
           <div className="mb-8">
             <h3 className="text-3xl font-bold mb-2">Tsabitah Hilyatul Aulia</h3>
-            <p className="text-pink-100">UI/UX Designer & Frontend Developer</p>
+            <p className="text-pink-100">UI/UX Designer</p>
           </div>
           <div className="border-t border-white/20 pt-8">
             <p className="text-pink-100">
