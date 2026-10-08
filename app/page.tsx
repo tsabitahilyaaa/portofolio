@@ -1,776 +1,114 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
+import { useEffect, useState } from "react"
 import {
-  Download,
+  ArrowDownRight,
+  ArrowUpRight,
+  Award,
+  BriefcaseBusiness,
+  Check,
+  ChevronRight,
+  Code2,
   ExternalLink,
-  Github,
+  Instagram,
   Linkedin,
   Mail,
-  Phone,
-  MapPin,
-  Award,
-  Code,
-  Palette,
-  Heart,
+  Menu,
+  MessageCircle,
   Sparkles,
-  ArrowRight,
-  ChevronDown,
-  Instagram,
   Users,
+  X,
 } from "lucide-react"
 
+const projects = [
+  { title: "CV Atmobrass Jaya", type: "Featured · Web Development", description: "A company profile website designed to make a growing business easier to discover, understand, and trust.", role: "Website Developer · Content-Based Filtering integration", tags: ["Laravel", "PHP", "MySQL", "Content-Based Filtering"], featured: true, link: "#" },
+  { title: "SELIN — Online Exam System", type: "UI/UX Design", description: "A comprehensive online examination platform with real-time monitoring, automated grading, and detailed analytics for educational institutions.", image: "/selin.png", tags: ["Figma"], link: "https://www.figma.com/design/0Jd7QQOBU7W8hSSSYwznfX/Untitled?node-id=0-1&p=f&t=IKfcMeOHUdUI9Jjp-0" },
+  { title: "Bookstown App", type: "Mobile UI/UX Design", description: "A modern book discovery and reading tracking application with social features, personalized recommendations, and reading progress tracking.", image: "/bookstown.jpg", tags: ["Figma"], link: "https://www.figma.com/proto/jSxqhm7VsGQWisEW9Q5KWB/SuperShy_BooksTown?node-id=25-3&p=f&t=rt4mLa4rPCoZnWrN-0&scaling=scale-down&content-scaling=fixed&page-id=25%3A2&starting-point-node-id=25%3A3" },
+  { title: "Online Exam Management Application", type: "Frontend Development", description: "A digital platform to create exam schedules, monitor ongoing tests, and generate participant score summaries efficiently and securely.", image: "/ujian.png", tags: ["Next.js", "TypeScript", "Chart.js", "Tailwind CSS"], link: "https://github.com/tsabitahilyaaa/aplikasi-ujian-online" },
+  { title: "Personal Portfolio Website", type: "UI/UX Designer & Frontend Developer", description: "A personal branding website that showcases Tsabitah's design and development skills through an engaging, elegant portfolio layout.", image: "/porto.png", tags: ["Figma", "HTML", "CSS"], link: "https://github.com/tsabitahilyaaa/portofolio" },
+]
+
+const certificates = [
+  { title: "Database Programming with SQL", issuer: "Oracle Academy", date: "2024", preview: "/oracle1.png", file: "/oracle1.pdf" },
+  { title: "Database Design", issuer: "Oracle Academy", date: "2024", preview: "/oracle2.png", file: "/oracle2.pdf" },
+  { title: "Career Essentials in Generative AI", issuer: "Microsoft and LinkedIn", date: "2024", preview: "/ai.png", file: "/ai.pdf" },
+  { title: "CCNA: Switching, Routing, and Wireless Essentials", issuer: "Cisco Networking Academy", date: "2025", preview: "/cisco.png", file: "/cisco.pdf" },
+  { title: "Bronze Award", issuer: "Indonesia National Science Enterprise Challenge", date: "2020", preview: "/inasec.png", file: "/inasec.pdf" },
+  { title: "MikroTik Certificate", issuer: "MikroTik", date: "Added 2026", preview: "/placeholder.svg", file: "#" },
+  { title: "Internship Certificate", issuer: "RS Sarkies 'Aisyiyah Kudus", date: "2025", preview: "/placeholder.svg", file: "#" },
+]
+
+const tools = ["PHP", "Laravel", "MySQL", "HTML", "CSS", "JavaScript", "Python", "Git / GitHub", "Next.js", "TypeScript", "Figma", "Tailwind CSS"]
+const socials = [
+  { label: "Email", value: "tsabitah@example.com", href: "mailto:tsabitah@example.com", icon: Mail },
+  { label: "LinkedIn", value: "linkedin.com/in/tsabitahily", href: "https://linkedin.com/in/tsabitahily", icon: Linkedin },
+  { label: "WhatsApp", value: "Start a conversation", href: "https://wa.me/6281234567890", icon: MessageCircle },
+  { label: "Instagram", value: "@tsabitahily", href: "https://instagram.com/tsabitahily", icon: Instagram },
+]
+
 export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState("home")
-  const [isVisible, setIsVisible] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [active, setActive] = useState("home")
 
   useEffect(() => {
-    setIsVisible(true)
-
-    const handleScroll = () => {
-      const sections = ["home", "about", "projects", "skills", "certificates", "contact"]
-      const scrollPosition = window.scrollY + 100
-
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
-          }
-        }
-      }
+    const onScroll = () => {
+      const current = ["home", "about", "education", "experience", "projects", "leadership", "skills", "certificates", "contact"].find((id) => {
+        const element = document.getElementById(id)
+        return element && window.scrollY + 180 >= element.offsetTop && window.scrollY + 180 < element.offsetTop + element.offsetHeight
+      })
+      if (current) setActive(current)
     }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
-  const projects = [
-    {
-      title: "SELIN - Online Exam System",
-      description:
-        "A comprehensive online examination platform with real-time monitoring, automated grading, and detailed analytics for educational institutions.",
-      type: "Graphic Design",
-      image: "/selin.png", // contoh gambar, simpan di public/selin.jpg
-      tags: ["Figma"],
-      link: "https://www.figma.com/design/0Jd7QQOBU7W8hSSSYwznfX/Untitled?node-id=0-1&p=f&t=IKfcMeOHUdUI9Jjp-0", // ganti dengan link Figma atau detail project
-    },
-    {
-      title: "Bookstown App",
-      description:
-        "A modern book discovery and reading tracking application with social features, personalized recommendations, and reading progress tracking.",
-      type: "Mobile UI/UX Design",
-      image: "/bookstown.jpg",
-      tags: ["Figma"],
-      link: "https://www.figma.com/proto/jSxqhm7VsGQWisEW9Q5KWB/SuperShy_BooksTown?node-id=25-3&p=f&t=rt4mLa4rPCoZnWrN-0&scaling=scale-down&content-scaling=fixed&page-id=25%3A2&starting-point-node-id=25%3A3",
-    },
-    {
-      title: "Online Exam Management Application",
-      description:
-        "An online exam management application is a digital platform designed to create exam schedules, monitor ongoing tests, and generate participants' score summaries efficiently and securely.",
-      type: "Frontend Development",
-      image: "/ujian.png",
-      tags: ["Next.js", "TypeScript", "Chart.js", "Tailwind CSS"],
-      link: "https://github.com/tsabitahilyaaa/aplikasi-ujian-online",
-    },
-    {
-      title: "Personal Portfolio Website",
-      description:
-        "A personal branding website that showcases Tsabitah's design and development skills through an engaging, elegant portfolio layout.",
-      type: "UI/UX Designer & Frontend Developer",
-      image: "/porto.png",
-      tags: ["Figma", "HTML", "CSS"],
-      link: "https://github.com/tsabitahilyaaa/portofolio",
-    },
-  ]
-
-  const skills = {
-    hard: [
-      "UI/UX Design",
-      "Frontend Development",
-      "Figma",
-      "JavaScript",
-      "HTML/CSS",
-    ],
-    soft: [
-      "Team Collaboration",
-      "Communication",
-      "Time Management",
-      "Attention to Detail",
-      "Adaptability",
-    ],
-  }
-
-  const certificates = [
-    {
-      title: "Database Programming with SQL",
-      issuer: "Oracle Academy",
-      date: "2024",
-      preview: "/oracle1.png",
-      file: "/oracle1.pdf",
-    },
-    {
-      title: "Database Design",
-      issuer: "Oracle Academy",
-      date: "2024",
-      preview: "/oracle2.png",
-      file: "/oracle2.pdf",
-    },
-    {
-      title: "Career Essentials in Generative AI",
-      issuer: "Microsoft and LinkedIn",
-      date: "2024",
-      preview: "/ai.png",
-      file: "/ai.pdf",
-    },
-    {
-      title: "CCNA: Switching, Routing, and Wireless Essentials",
-      issuer: "Cisco Networking Academy",
-      date: "2025",
-      preview: "/cisco.png",
-      file: "/cisco.pdf",
-    },
-    {
-      title: "Bronze Award",
-      issuer: "Indonesia National Science Enterprise Challenge",
-      date: "2020",
-      preview: "/inasec.png",
-      file: "/inasec.pdf",
-    },
-  ]
+  const go = (id: string) => { setMenuOpen(false); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }) }
+  const nav = ["about", "experience", "projects", "leadership", "certificates", "contact"]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-orange-50">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-pink-100">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-              Tsabitah Hilyatul Aulia
-            </div>
-            <div className="hidden md:flex space-x-8">
-              {["home", "about", "projects", "skills", "certificates", "contact"].map((section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className={`capitalize transition-colors duration-300 ${
-                    activeSection === section ? "text-pink-600 font-semibold" : "text-gray-600 hover:text-pink-500"
-                  }`}
-                >
-                  {section}
-                </button>
-              ))}
-            </div>
-          </div>
+    <main className="site-shell">
+      <nav className="topbar" aria-label="Main navigation">
+        <button className="wordmark" onClick={() => go("home")}><span>THA</span> / Bita</button>
+        <div className={`nav-links ${menuOpen ? "is-open" : ""}`}>
+          {nav.map((item) => <button key={item} className={active === item ? "active" : ""} onClick={() => go(item)}>{item}</button>)}
+          <a className="nav-cta" href="mailto:tsabitah@example.com">Let&apos;s talk <ArrowUpRight size={15} /></a>
         </div>
+        <button className="menu-button" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
       </nav>
 
-      {/* Home Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-4">
-        <div
-          className={`container mx-auto text-center transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
-        >
-          <div className="relative inline-block mb-8">
-            <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-8 border-white shadow-2xl relative">
-              <Image
-                src="/fotoporto1.jpg"
-                alt="Tsabitah Hilyatul Aulia"
-                width={200}
-                height={200}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center animate-pulse">
-              <Sparkles className="w-8 h-8 text-white" />
-            </div>
+      <section id="home" className="hero section-pad">
+        <div className="eyebrow"><span className="status-dot" /> Available for opportunities <span className="hero-year">2026</span></div>
+        <div className="hero-layout">
+          <div className="hero-copy">
+            <p className="kicker">Hello, I&apos;m Bita — an informatics graduate</p>
+            <h1>Building the web<br /><em>with purpose.</em></h1>
+            <p className="hero-lede">Tsabitah Hilyatul Aulia is a web developer who turns thoughtful ideas into useful, clear, and human digital experiences.</p>
+            <div className="hero-actions"><button className="button button-dark" onClick={() => go("projects")}>Explore my work <ArrowDownRight size={17} /></button><button className="text-link" onClick={() => go("about")}>More about me <ChevronRight size={16} /></button></div>
           </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-pink-500 via-purple-600 to-orange-500 bg-clip-text text-transparent">
-            Tsabitah Hilyatul Aulia
-          </h1>
-
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <Badge variant="secondary" className="bg-pink-100 text-pink-700 px-4 py-2 text-lg">
-              <Palette className="w-4 h-4 mr-2" />
-              UI/UX Designer
-            </Badge>
-          </div>
-
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Crafting delightful digital experiences through creative design and clean code. I bring ideas to life with
-            passion, precision, and a touch of magic ✨
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <Download className="w-5 h-5 mr-2" />
-              Download CV
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => scrollToSection("projects")}
-              className="border-2 border-pink-300 text-pink-600 hover:bg-pink-50 px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              View Projects
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => scrollToSection("contact")}
-              className="border-2 border-purple-300 text-purple-600 hover:bg-purple-50 px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Contact Me
-              <Mail className="w-5 h-5 ml-2" />
-            </Button>
-          </div>
-
-          <div className="mt-16 animate-bounce">
-            <ChevronDown className="w-8 h-8 text-pink-400 mx-auto" />
-          </div>
+          <div className="hero-portrait"><div className="portrait-frame"><Image src="/fotoporto1.jpg" alt="Tsabitah Hilyatul Aulia" width={560} height={680} priority /></div><div className="portrait-note">D3 Teknik Informatika<br />Politeknik Negeri Semarang</div><div className="floating-mark"><Sparkles size={18} /> Web<br />Developer</div></div>
         </div>
+        <div className="hero-bottom"><span>01 — 09</span><span>Scroll to explore <ArrowDownRight size={16} /></span><span className="hero-rule" /></div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-              About Me
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full"></div>
-          </div>
+      <section id="about" className="section-pad about-section"><div className="section-label">01 / About me</div><div className="two-col"><div><h2>I care about the details that make a product <em>feel right.</em></h2></div><div className="body-copy"><p>I&apos;m Tsabitah Hilyatul Aulia, but you can call me Bita. I&apos;m an Informatics graduate with a main focus on web development and a supporting eye for UI/UX.</p><p>I enjoy translating messy problems into structured interfaces and reliable systems — from the first wireframe to the last line of code. I&apos;m currently looking for a team where I can keep learning, contribute with intention, and ship meaningful work.</p><div className="contact-row">{socials.map(({ label, href, icon: Icon }) => <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer"><Icon size={17} /> {label}</a>)}</div></div></div></section>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative">
-              <div className="bg-white rounded-3xl p-8 shadow-2xl border border-pink-100">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center">
-                    <Heart className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-800">My Story</h3>
-                </div>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Hello! I'm Tsabitah, a passionate UI/UX designer and frontend developer who believes that great design
-                  should not only look beautiful but also solve real problems. With a background in both design and
-                  development, I bridge the gap between creativity and functionality.
-                </p>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  I'm an Informatics Engineering Student at Politeknik Negeri Semarang. My journey began with a fascination for how digital products can impact people's lives. I love
-                  creating intuitive interfaces that make complex tasks feel effortless and enjoyable. When I'm not
-                  designing or coding, you'll find me exploring new design trends, learning emerging technologies, or
-                  sketching ideas in my notebook.
-                </p>
-                <p className="text-gray-600 leading-relaxed">
-                  I'm always excited to collaborate on projects that challenge me to grow and create meaningful
-                  experiences for users. Let's build something amazing together! 🚀
-                </p>
-              </div>
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-r from-orange-300 to-pink-400 rounded-full opacity-20"></div>
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-purple-300 to-pink-400 rounded-full opacity-20"></div>
-            </div>
+      <section id="education" className="dark-section section-pad"><div className="section-label light">02 / Education</div><div className="education-row"><div><p className="kicker light-text">Politeknik Negeri Semarang</p><h2>D3 Teknik<br /><em>Informatika</em></h2></div><div className="education-meta"><span>2023 — 2026</span><strong>3.77<span>/4.00</span></strong><p>GPA</p></div></div></section>
 
-            <div className="space-y-6">
-              <Card className="bg-gradient-to-r from-pink-50 to-purple-50 border-pink-200 hover:shadow-lg transition-shadow duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
-                      <Palette className="w-5 h-5 text-white" />
-                    </div>
-                    <h4 className="text-xl font-semibold text-gray-800">Design Philosophy</h4>
-                  </div>
-                  <p className="text-gray-600">
-                    I believe in user-centered design that combines aesthetics with functionality. Every pixel has a
-                    purpose, and every interaction should feel natural.
-                  </p>
-                </CardContent>
-              </Card>
+      <section id="experience" className="section-pad experience-section"><div className="section-label">03 / Internship & experience</div><div className="experience-grid"><div><p className="kicker">Aug — Dec 2025</p><h2>IT Intern at<br /><em>RS Sarkies &apos;Aisyiyah Kudus</em></h2><p className="body-copy intro">A hands-on chapter where technology met real operational needs. I contributed to clearer workflows, practical digital solutions, and the everyday work of an IT team.</p></div><div className="case-notes"><div><span>Role</span><strong>IT Intern</strong></div><div><span>Focus</span><strong>Systems · Support · Collaboration</strong></div><div><span>Contribution</span><strong>Supporting technology operations and building practical solutions for the organization.</strong></div><div><span>Technologies</span><strong>Web development, databases, documentation</strong></div></div></div><div className="photo-strip"><div className="photo-placeholder large"><BriefcaseBusiness size={25} /><span>Internship stories<br />coming soon</span></div><div className="photo-placeholder"><span>Photos & screenshots<br />will be added here</span></div><div className="photo-placeholder accent"><Check size={25} /><span>Learning by<br />doing</span></div></div></section>
 
-              <Card className="bg-gradient-to-r from-purple-50 to-orange-50 border-purple-200 hover:shadow-lg transition-shadow duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
-                      <Code className="w-5 h-5 text-white" />
-                    </div>
-                    <h4 className="text-xl font-semibold text-gray-800">Development Approach</h4>
-                  </div>
-                  <p className="text-gray-600">
-                    Clean, maintainable code is my priority. I focus on performance, accessibility, and creating
-                    seamless user experiences across all devices.
-                  </p>
-                </CardContent>
-              </Card>
+      <section id="projects" className="section-pad project-section"><div className="section-label">04 / Selected work</div><div className="section-heading"><h2>Projects with a point<br /><em>of view.</em></h2><p>Selected work across web development, product thinking, and interface design. Each one is a chance to make something more useful.</p></div><div className="project-grid">{projects.map((project) => <article key={project.title} className={`project-card ${project.featured ? "featured" : ""}`}><a href={project.link} target={project.link !== "#" ? "_blank" : undefined} rel="noreferrer" className="project-visual">{project.image ? <Image src={project.image} alt={`${project.title} preview`} fill sizes="(max-width: 900px) 100vw, 50vw" /> : <div className="atmobrass-visual"><span>CV</span><strong>Atmobrass<br />Jaya</strong><small>company profile / 2026</small><ArrowUpRight /></div>}<span className="view-icon"><ExternalLink size={17} /></span></a><div className="project-info"><p className="project-type">{project.type}</p><h3>{project.title}</h3><p>{project.description}</p>{project.role && <p className="role"><span>My role</span> {project.role}</p>}<div className="tag-row">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></div></article>)}</div></section>
 
-              <Card className="bg-gradient-to-r from-orange-50 to-pink-50 border-orange-200 hover:shadow-lg transition-shadow duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
-                      <Sparkles className="w-5 h-5 text-white" />
-                    </div>
-                    <h4 className="text-xl font-semibold text-gray-800">Creative Process</h4>
-                  </div>
-                  <p className="text-gray-600">
-                    From research and ideation to prototyping and testing, I follow a structured yet flexible process
-                    that ensures the best outcomes for every project.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section id="leadership" className="soft-section section-pad"><div className="section-label">05 / Leadership & organization</div><div className="story-grid"><div><h2>Work is better when we <em>show up for each other.</em></h2></div><div><p className="body-copy">Beyond code, I&apos;ve learned how to listen, communicate, and take responsibility as part of a team. My experience in Himpunan Mahasiswa Elektro Polines shaped the way I approach collaboration: be prepared, be clear, and make room for others.</p><div className="org-card"><Users size={22} /><div><p>Himpunan Mahasiswa Elektro Polines</p><strong>Staff — Public Relation Division</strong><span>May 2024 — May 2025</span></div></div></div></div><div className="photo-strip org-strip"><div className="photo-placeholder wide"><Users size={24} /><span>Organization & committee<br />photos coming soon</span></div><div className="story-quote">“Communication is not just what I say — it&apos;s how I help a team move forward.”</div></div></section>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 bg-white/50">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-              Featured Projects
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full mb-6"></div>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Here are some of my favorite projects that showcase my skills in UI/UX design and frontend development
-            </p>
-          </div>
+      <section id="skills" className="section-pad skills-section"><div className="section-label">06 / Tools & technologies</div><div className="skills-layout"><div><h2>Curious by nature.<br /><em>Practical by craft.</em></h2><p className="body-copy">A growing toolkit for building dependable, considered digital products.</p></div><div className="tool-cloud">{tools.map((tool, index) => <span key={tool} className={index < 4 ? "primary-tool" : ""}>{tool}</span>)}</div></div></section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <Card
-                key={index}
-                className="group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-0 bg-white rounded-3xl overflow-hidden"
-              >
-                <div className="relative overflow-hidden">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    width={400}
-                    height={300}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Button size="sm" className="bg-white/20 backdrop-blur-sm text-white border-white/30">
-                      <ExternalLink className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <Badge className="bg-pink-100 text-pink-700 mb-3">{project.type}</Badge>
-                  <h3 className="text-xl font-bold mb-3 text-gray-800">{project.title}</h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, tagIndex) => (
-                      <Badge key={tagIndex} variant="secondary" className="bg-purple-100 text-purple-700">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center w-full h-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white rounded-full py-2 px-4 transition-all duration-300"
-                    >
-                      View Project
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </a>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section id="certificates" className="soft-section section-pad"><div className="section-label">07 / Certificates</div><div className="section-heading"><h2>Always learning,<br /><em>always moving.</em></h2><p>Credentials and milestones that mark the things I&apos;ve chosen to learn along the way.</p></div><div className="certificate-grid">{certificates.map((cert) => <a key={cert.title} href={cert.file !== "#" ? cert.file : undefined} target={cert.file !== "#" ? "_blank" : undefined} rel="noreferrer" className="certificate-card"><div className="certificate-image"><Image src={cert.preview} alt={`${cert.title} certificate`} fill sizes="(max-width: 700px) 100vw, 25vw" /></div><div><p>{cert.issuer}</p><h3>{cert.title}</h3><span>{cert.date} <ArrowUpRight size={14} /></span></div></a>)}</div></section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-              Skills & Expertise
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full mb-6"></div>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              A combination of technical skills and soft skills that help me create exceptional digital experiences
-            </p>
-          </div>
+      <section id="contact" className="contact-section section-pad"><div className="section-label light">08 / Let&apos;s connect</div><h2>Have something<br /><em>in mind?</em></h2><p>Whether you&apos;re hiring, collaborating, or simply want to say hello — I&apos;d love to hear from you.</p><div className="contact-grid">{socials.map(({ label, value, href, icon: Icon }) => <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer"><Icon size={20} /><span><small>{label}</small>{value}</span><ArrowUpRight size={18} /></a>)}</div></section>
 
-          <div className="grid md:grid-cols-2 gap-12">
-            <Card className="bg-gradient-to-br from-pink-50 to-purple-50 border-pink-200 rounded-3xl overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-pink-500 to-purple-600 text-white">
-                <CardTitle className="flex items-center gap-3 text-2xl">
-                  <Code className="w-6 h-6" />
-                  Technical Skills
-                </CardTitle>
-                <CardDescription className="text-pink-100">Tools and technologies I work with</CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="flex flex-wrap gap-3">
-                  {skills.hard.map((skill, index) => (
-                    <Badge
-                      key={index}
-                      className="bg-white text-pink-700 border border-pink-200 hover:bg-pink-50 transition-colors duration-200 px-3 py-1"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-purple-50 to-orange-50 border-purple-200 rounded-3xl overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-purple-500 to-orange-500 text-white">
-                <CardTitle className="flex items-center gap-3 text-2xl">
-                  <Heart className="w-6 h-6" />
-                  Soft Skills
-                </CardTitle>
-                <CardDescription className="text-purple-100">Personal qualities that drive my work</CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="flex flex-wrap gap-3">
-                  {skills.soft.map((skill, index) => (
-                    <Badge
-                      key={index}
-                      className="bg-white text-purple-700 border border-purple-200 hover:bg-purple-50 transition-colors duration-200 px-3 py-1"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Organizations Subsection */}
-          <div className="mt-16">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-                Organizations
-              </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full"></div>
-            </div>
-
-            <div className="max-w-4xl mx-auto">
-              <Card className="bg-gradient-to-br from-pink-50 via-purple-50 to-orange-50 border-pink-200 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <CardContent className="p-8">
-                  <div className="flex items-start gap-6">
-                    <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                        <Users className="w-4 h-4 text-pink-500" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <div>
-                          <h4 className="text-2xl font-bold text-gray-800 mb-2">Himpunan Mahasiswa Elektro Polines</h4>
-                          <p className="text-lg font-semibold text-pink-600 mb-1">
-                            Staff of the Public Relation Division
-                          </p>
-                          <div className="flex items-center gap-2 text-gray-600">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span className="text-sm font-medium">May 2024 - May 2025</span>
-                          </div>
-                        </div>
-                        <Badge className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 mt-4 md:mt-0">
-                          Active Member
-                        </Badge>
-                      </div>
-                      <p className="text-gray-600 leading-relaxed">
-                        Contributing to public relations and communication strategies as part of the Public Relation
-                        Division. Involved in managing social media presence, creating promotional content, coordinating
-                        media outreach, and enhancing the organization's brand visibility through various communication
-                        channels.
-                      </p>
-                      <div className="flex flex-wrap gap-2 mt-4">
-                        <Badge variant="secondary" className="bg-pink-100 text-pink-700">
-                          Public Relations
-                        </Badge>
-                        <Badge variant="secondary" className="bg-purple-100 text-purple-700">
-                          Social Media Management
-                        </Badge>
-                        <Badge variant="secondary" className="bg-orange-100 text-orange-700">
-                          Content Creation
-                        </Badge>
-                        <Badge variant="secondary" className="bg-green-100 text-green-700">
-                          Brand Communication
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Certificates Section */}
-      <section id="certificates" className="py-20 px-4 bg-white/50">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-              Certificates & Achievements
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full mb-6"></div>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Continuous learning and professional development milestones
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certificates.map((cert, index) => (
-              <Card
-                key={index}
-                className="group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-0 bg-white rounded-3xl overflow-hidden cursor-pointer"
-                onClick={() => window.open(cert.file, "_blank")}
-              >
-                <div className="relative overflow-hidden">
-                  <Image
-                    src={cert.preview || "/placeholder.svg"}
-                    alt={cert.title}
-                    width={400}
-                    height={300}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Button
-                      size="sm"
-                      className="bg-white/20 backdrop-blur-sm text-white border-white/30"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        // Download functionality
-                        const link = document.createElement("a")
-                        link.href = cert.file
-                        link.download = `${cert.title}.pdf`
-                        link.click()
-                      }}
-                    >
-                      <Download className="w-4 h-4" />
-                    </Button>
-                  </div>
-                  <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30">Click to view</Badge>
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center">
-                      <Award className="w-4 h-4 text-white" />
-                    </div>
-                    <Badge className="bg-pink-100 text-pink-700">{cert.issuer}</Badge>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2">{cert.title}</h3>
-                  <p className="text-sm text-gray-500 mb-4">{cert.date}</p>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="w-full border-pink-300 text-pink-600 hover:bg-pink-50 rounded-full bg-transparent"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      const link = document.createElement("a")
-                      link.href = cert.file
-                      link.download = `${cert.title}.pdf`
-                      link.click()
-                    }}
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Certificate
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-              Let's Work Together
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full mb-6"></div>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Have a project in mind? I'd love to hear about it and discuss how we can bring your ideas to life!
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            <Card className="bg-white rounded-3xl border-0 shadow-2xl">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-gray-800">Send me a message</CardTitle>
-                <CardDescription>I'll get back to you as soon as possible!</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input
-                      id="firstName"
-                      placeholder="John"
-                      className="rounded-xl border-pink-200 focus:border-pink-400"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input
-                      id="lastName"
-                      placeholder="Doe"
-                      className="rounded-xl border-pink-200 focus:border-pink-400"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="john@example.com"
-                    className="rounded-xl border-pink-200 focus:border-pink-400"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="subject">Subject</Label>
-                  <Input
-                    id="subject"
-                    placeholder="Project Collaboration"
-                    className="rounded-xl border-pink-200 focus:border-pink-400"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea
-                    id="message"
-                    placeholder="Tell me about your project..."
-                    rows={5}
-                    className="rounded-xl border-pink-200 focus:border-pink-400"
-                  />
-                </div>
-                <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white rounded-xl py-3">
-                  Send Message
-                  <Mail className="w-4 h-4 ml-2" />
-                </Button>
-              </CardContent>
-            </Card>
-
-            <div className="space-y-8">
-              <Card className="bg-gradient-to-r from-pink-50 to-purple-50 border-pink-200 rounded-3xl">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-6 text-gray-800">Get in touch</h3>
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center">
-                        <Mail className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-800">Email</p>
-                        <p className="text-gray-600">tsabitah@example.com</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
-                        <Phone className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-800">Phone</p>
-                        <p className="text-gray-600">+62 123 456 7890</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
-                        <MapPin className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-800">Location</p>
-                        <p className="text-gray-600">Jakarta, Indonesia</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white rounded-3xl border-0 shadow-xl">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-6 text-gray-800">Follow me</h3>
-                  <div className="flex gap-4">
-                    <Button
-                      size="lg"
-                      className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-14 h-14 p-0 transition-all duration-300 hover:scale-110"
-                      onClick={() => window.open("https://linkedin.com/in/tsabitahily", "_blank")}
-                      aria-label="Visit Tsabitah's LinkedIn profile"
-                    >
-                      <Linkedin className="w-6 h-6" />
-                    </Button>
-                    <Button
-                      size="lg"
-                      className="bg-purple-500 hover:bg-purple-600 text-white rounded-full w-14 h-14 p-0 transition-all duration-300 hover:scale-110"
-                      onClick={() => window.open("https://github.com/tsabitahily", "_blank")}
-                      aria-label="Visit Tsabitah's GitHub profile"
-                    >
-                      <Github className="w-6 h-6" />
-                    </Button>
-                    <Button
-                      size="lg"
-                      className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full w-14 h-14 p-0 transition-all duration-300 hover:scale-110"
-                      onClick={() => window.open("https://instagram.com/tsabitahily", "_blank")}
-                      aria-label="Visit Tsabitah's Instagram profile"
-                    >
-                      <Instagram className="w-6 h-6" />
-                    </Button>
-                    <Button
-                      size="lg"
-                      className="bg-orange-500 hover:bg-orange-600 text-white rounded-full w-14 h-14 p-0 transition-all duration-300 hover:scale-110"
-                      onClick={() => scrollToSection("contact")}
-                      aria-label="Send an email to Tsabitah"
-                    >
-                      <Mail className="w-6 h-6" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gradient-to-r from-pink-500 via-purple-600 to-orange-500 text-white py-12 px-4">
-        <div className="container mx-auto text-center">
-          <div className="mb-8">
-            <h3 className="text-3xl font-bold mb-2">Tsabitah Hilyatul Aulia</h3>
-            <p className="text-pink-100">UI/UX Designer</p>
-          </div>
-          <div className="border-t border-white/20 pt-8">
-            <p className="text-pink-100">
-              © {new Date().getFullYear()} Tsabitah Hilyatul Aulia. Made with{" "}
-              <Heart className="w-4 h-4 inline text-pink-300" /> and lots of creativity.
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
+      <footer><span>© {new Date().getFullYear()} Tsabitah Hilyatul Aulia</span><span>Informatics Graduate · Web Developer</span><button onClick={() => go("home")}>Back to top <ArrowUpRight size={15} /></button></footer>
+    </main>
   )
 }
+
