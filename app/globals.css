@@ -879,14 +879,65 @@ a { color: inherit; text-decoration: none; }
   z-index: 1;
 }
 
-.atmobrass-visual svg { 
-  position: absolute; 
-  right: 35px; 
+  .atmobrass-visual svg {
+  position: absolute;
+  right: 35px;
   bottom: 32px;
   opacity: 0.8;
-}
+  }
 
-.project-info { 
+  .atmobrass-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  height: 100%;
+  padding: 16px;
+  background: var(--navy);
+  }
+
+  .atmobrass-shot {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 18px 14px;
+  color: var(--white);
+  background: linear-gradient(145deg, #233b67, #0b1730 72%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  transition: transform 0.35s ease, border-color 0.35s ease;
+  }
+
+  .atmobrass-shot::before {
+  content: '';
+  display: block;
+  flex: 1;
+  min-height: 40px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 42%), repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 14px);
+  }
+
+  .atmobrass-shot:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  }
+
+  .atmobrass-shot span,
+  .atmobrass-shot small {
+  font-family: 'DM Mono';
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.72;
+  }
+
+  .atmobrass-shot strong {
+  font-size: clamp(11px, 1.2vw, 16px);
+  line-height: 1.15;
+  }
+  
+  .project-info {
   padding: 25px 3px;
 }
 
